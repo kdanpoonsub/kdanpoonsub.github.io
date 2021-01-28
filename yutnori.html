@@ -1,0 +1,127 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Yut Nori</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neucha">
+  <style>
+      * {
+          font-family: "Neucha"
+      }
+      .imgbox {
+          display: grid;
+          height: 50%;
+      }
+      .center-fit {
+          max-width: 50%;
+          max-height: 100vh;
+          margin: auto;
+      }
+      h1{
+        font-size: 50px;
+      }
+      button {
+        padding: 10px;
+        line-height: 10px;
+        font-size: 20px;
+        width: 100px;
+      }
+      p{
+        font-size: 20px;
+      }
+  </style>
+</head>
+
+<body>
+	
+	<div class = "imgbox">
+	    <br>
+	    <h1 class="center-fit">Yut Nori! (all credits to Hannah!)</h1>
+	    <button class="center-fit" type="button" onclick="roll()">Throw!</button>
+	    <br>
+	    <img class = "center-fit" src="board.jpg" alt="board" id="board">
+	    <br>
+	    <p id="result" class="center-fit">Press the button to throw the sticks!</p>
+  	</div>
+  
+  <script>
+  	const BEKTO = -1, DO = 1, GE = 2, GEOL = 3, YUT = 4, MO = 5;
+  	
+  	function roll(){
+      	document.getElementById('board').src='throw.jpg';
+  		var sticks = [0, 0, 0, 0];
+  		var i;
+  		for (i = 0; i < 4; i++){
+  			if (Math.floor(Math.random() * 20) < 13){
+	          sticks[i] = 0;
+	        } else {
+	          sticks[i] = 1;
+	        }
+  		}
+  		var up = 0;
+  		for (i = 0; i < 4; i++){
+  			if (sticks[i] == 0){ // 0 is up
+  				up++;
+  			}
+  		}
+  		
+  		var roll;
+  		switch(up){
+  			case 0:
+  				roll = MO;
+  				break;
+  			case 1:
+  				var bekto = Math.floor(Math.random() * 3)+1;
+	  			if (bekto == DO){ // 1 in 4 chance of back-do
+	  				roll = BEKTO;
+	  			} else {
+	  				roll = DO;
+	  			}
+	  			break;
+	  		case 2:
+	  			roll = GE;
+	  			break;
+	  		case 3:
+	  			roll = GEOL;
+	  			break;
+	  		case 4:
+	  			roll = YUT;
+	  			break;
+  		}
+
+  		setTimeout(function() {showRoll(roll)}, 1000);
+  	}
+
+  	function showRoll(roll){
+  		switch(roll){
+  			case BEKTO:
+  				document.getElementById('board').src='bekto.jpg';
+          		document.getElementById('result').innerHTML="You got a back do :P Move one space backwards";
+  				break;
+  			case DO:
+  				document.getElementById('board').src='do.jpg';
+          		document.getElementById('result').innerHTML="도/DO! Move one space.";
+  				break;
+	  		case GE:
+	  			document.getElementById('board').src='ge.jpg';
+          		document.getElementById('result').innerHTML="개/GE! Move two spaces.";
+  				break;
+	  		case GEOL:
+	  			document.getElementById('board').src='geol.jpg';
+          		document.getElementById('result').innerHTML="걸/GEOL! Move three spaces.";
+  				break;
+	  		case YUT:
+	  			document.getElementById('board').src='yut.jpg';
+          		document.getElementById('result').innerHTML="윶/YUT! Niceeeee move four spaces and roll again!";
+  				break;
+	  		case MO:
+	  			document.getElementById('board').src='mo.jpg';
+          		document.getElementById('result').innerHTML="모/MO! Wowww move five spaces and roll again!";
+  				break;
+  		}
+  	}
+  </script>
+</body>
+</html>
